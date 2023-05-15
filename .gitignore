@@ -1,0 +1,5 @@
+secrets.json
+/__pycache__
+/conversations
+.DS_Store
+
