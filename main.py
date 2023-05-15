@@ -4,7 +4,7 @@ from components.vectorstore_conversation import VectorstoreConversation
 
 def main():
 	human_name = input(" Enter your name, please: ")
-	companion = Mel(id='Mel', mute=True, human_name=human_name)
+	companion = Mel(id='Mel', mute=False, human_name=human_name)
 	session = VectorstoreConversation(companion=companion)
 	session.start()
 

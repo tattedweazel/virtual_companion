@@ -73,7 +73,7 @@ class VectorstoreConversation():
             ),
             prompt = prompt,
             memory=memory,
-            verbose=True
+            verbose=False
         )
 
 
