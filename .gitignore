@@ -1,5 +1,5 @@
 secrets.json
 /__pycache__
-/conversations
+/conversations/*.*
 .DS_Store
 
