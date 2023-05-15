@@ -10,9 +10,11 @@ from langchain.vectorstores import Weaviate
 
 class VectorstoreConversation():
 
-    def __init__(self, companion):
+    def __init__(self, companion, first_time = False, clear_store=False):
         self.creds = SecretSquirrel().stash
         self.companion = companion
+        self.first_time = first_time
+        self.clear_store = clear_store
         self.stop = False
         self.message_log = []
         
@@ -29,40 +31,44 @@ class VectorstoreConversation():
                 'X-OpenAI-Api-Key': self.creds["open_ai_api_key"]
             }
         )
-        client.schema.delete_all()
+        if self.clear_store:
+            client.schema.delete_all()
+        
         client.schema.get()
-        schema = {
-            "classes": [
-                {
-                    "class": "Paragraph",
-                    "description": "A written paragraph",
-                    "vectorizer": "text2vec-openai",
-                    "moduleConfig": {
-                        "text2vec-openai": {
-                            "model": "ada",
-                            "modelVersion": "002",
-                            "type": "text"
-                        }
-                    },
-                    "properties": [
-                        {
-                            "dataType": ["text"],
-                            "description": "The content of the paragraph",
-                            "moduleConfig": {
-                                "text2vec-openai": {
-                                    "skip": False,
-                                    "vectorizePropertyName": False
-                                }
-                            },
-                            "name": "content",
+        
+        if self.first_time:
+            schema = {
+                "classes": [
+                    {
+                        "class": "MelParagraph",
+                        "description": "A written paragraph",
+                        "vectorizer": "text2vec-openai",
+                        "moduleConfig": {
+                            "text2vec-openai": {
+                                "model": "ada",
+                                "modelVersion": "002",
+                                "type": "text"
+                            }
                         },
-                    ],
-                },
-            ]
-        }
+                        "properties": [
+                            {
+                                "dataType": ["text"],
+                                "description": "The content of the paragraph",
+                                "moduleConfig": {
+                                    "text2vec-openai": {
+                                        "skip": False,
+                                        "vectorizePropertyName": False
+                                    }
+                                },
+                                "name": "content",
+                            },
+                        ],
+                    },
+                ]
+            }
 
-        client.schema.create(schema)
-        vectorstore = Weaviate(client, "Paragraph", "content")
+            client.schema.create(schema)
+        vectorstore = Weaviate(client, "MelParagraph", "content")
         retriever = vectorstore.as_retriever(search_kwargs=dict(k=4))
         memory = VectorStoreRetrieverMemory(retriever=retriever)
         self.conversation_chain = LLMChain(
