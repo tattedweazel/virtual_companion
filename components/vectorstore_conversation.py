@@ -68,18 +68,18 @@ class VectorstoreConversation():
             }
 
             client.schema.create(schema)
-        vectorstore = Weaviate(client, "MelParagraph", "content", relevance_score_fn=0.8)
-        retriever = vectorstore.as_retriever(search_kwargs=dict(k=6))
+        vectorstore = Weaviate(client, "MelParagraph", "content")
+        retriever = vectorstore.as_retriever(search_kwargs=dict(k=8))
         memory = VectorStoreRetrieverMemory(retriever=retriever)
         self.conversation_chain = LLMChain(
             llm = ChatOpenAI(
                 model_name='gpt-3.5-turbo',
                 openai_api_key=self.creds['open_ai_api_key'],
-                temperature=0.5
+                temperature=0.6
             ),
             prompt = prompt,
             memory=memory,
-            verbose=False
+            verbose=True
         )
 
 
