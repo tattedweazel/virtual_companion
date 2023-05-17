@@ -1,6 +1,6 @@
 import openai
 from openai.error import RateLimitError, APIError, APIConnectionError
-from components.secret_squirrel import SecretSquirrel
+from tools.secret_squirrel import SecretSquirrel
 from time import sleep
 
 

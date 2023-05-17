@@ -1,5 +1,5 @@
 import elevenlabs
-from components.secret_squirrel import SecretSquirrel
+from tools.secret_squirrel import SecretSquirrel
 
 
 class ELSpeechModule():

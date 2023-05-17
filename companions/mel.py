@@ -1,4 +1,4 @@
-from components.el_speech_module import ELSpeechModule
+from tools.el_speech_module import ELSpeechModule
 
 
 class Mel():

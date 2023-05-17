@@ -1,6 +1,6 @@
 import json
-import weaviate
-from components.secret_squirrel import SecretSquirrel
+from tools.secret_squirrel import SecretSquirrel
+from connectors.weaviate_connector import WeaviateConnector
 from datetime import datetime
 from langchain import LLMChain, PromptTemplate
 from langchain.chat_models import ChatOpenAI
@@ -23,14 +23,8 @@ class VectorstoreConversation():
             template = self.companion.prompt_template()
         )
 
-        auth_config = weaviate.AuthApiKey(api_key=self.creds['weaviate_api_key'])
-        client = weaviate.Client(
-            url=self.creds["weaviate_url"],
-            auth_client_secret=auth_config,
-            additional_headers={
-                'X-OpenAI-Api-Key': self.creds["open_ai_api_key"]
-            }
-        )
+        client = WeaviateConnector().get_client()
+        
         if self.clear_store:
             client.schema.delete_all()
         

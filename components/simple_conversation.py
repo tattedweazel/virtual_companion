@@ -1,6 +1,5 @@
 import json
-from components.chat_gpt_connector import ChatGptConnector
-from base.companion import Companion
+from connectors.chat_gpt_connector import ChatGptConnector
 from base.conversation import Conversation
 from datetime import datetime
 from base.message import Message
@@ -9,8 +8,8 @@ from components.token_counter import TokenCounter
 
 class SimpleConversation():
 
-    def __init__(self, companion_id):
-        self.companion = Companion(companion_id)
+    def __init__(self, companion):
+        self.companion = companion
         self.conversation = Conversation()
         self.chat_gpt_connector = ChatGptConnector()
         self.stop = False
