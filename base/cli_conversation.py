@@ -1,13 +1,9 @@
 import json
 from tools.secret_squirrel import SecretSquirrel
-from connectors.kg_connector import KGConnector
 from datetime import datetime
-from langchain import LLMChain, PromptTemplate
-from langchain.chat_models import ChatOpenAI
-from langchain.vectorstores import Weaviate
 
 
-class Conversation():
+class CliConversation():
 
     def __init__(self, companion):
         self.creds = SecretSquirrel().stash

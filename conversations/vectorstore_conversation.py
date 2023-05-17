@@ -1,4 +1,4 @@
-from base.conversation import Conversation
+from base.cli_conversation import CliConversation
 from connectors.weaviate_connector import WeaviateConnector
 from langchain import LLMChain, PromptTemplate
 from langchain.chat_models import ChatOpenAI
@@ -6,7 +6,7 @@ from langchain.memory import VectorStoreRetrieverMemory
 from langchain.vectorstores import Weaviate
 
 
-class VectorstoreConversation(Conversation):
+class VectorstoreConversation(CliConversation):
 
     def __init__(self, companion, first_time = False, clear_store=False):
         super().__init__(companion)

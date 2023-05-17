@@ -1,10 +1,10 @@
-from base.conversation import Conversation
+from base.cli_conversation import CliConversation
 from connectors.kg_connector import KGConnector
 from langchain import LLMChain, PromptTemplate
 from langchain.chat_models import ChatOpenAI
 
 
-class KGConversation(Conversation):
+class KGConversation(CliConversation):
 
     def __init__(self, companion):
         super().__init__(companion)

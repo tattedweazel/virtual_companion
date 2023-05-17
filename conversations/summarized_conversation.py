@@ -1,10 +1,10 @@
-from base.conversation import Conversation
+from base.cli_conversation import CliConversation
 from langchain import LLMChain, PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationSummaryMemory
 
 
-class SummarizedConversation(Conversation):
+class SummarizedConversation(CliConversation):
 
     def __init__(self, companion):
         super().__init__(companion)
