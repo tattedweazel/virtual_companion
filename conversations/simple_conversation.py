@@ -33,7 +33,7 @@ class SimpleConversation():
     
 
     def store_conversation(self):
-        with open(f"conversations/{datetime.strftime(datetime.now(),'%Y%m%d_%H_%M_%S')}.json", "w") as outfile:
+        with open(f"logs/{datetime.strftime(datetime.now(),'%Y%m%d_%H_%M_%S')}.json", "w") as outfile:
             counter = TokenCounter()
             token_count = counter.get_token_count(json.dumps(self.conversation.messages))
             self.conversation.add_message(Message('total_tokens', token_count))

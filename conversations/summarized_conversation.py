@@ -59,7 +59,7 @@ class SummarizedConversation():
                 "sender": sender,
                 "content": message.content
             })
-        with open(f"conversations/{datetime.strftime(datetime.now(),'%Y%m%d_%H_%M_%S')}.json", "w") as outfile:
+        with open(f"logs/{datetime.strftime(datetime.now(),'%Y%m%d_%H_%M_%S')}.json", "w") as outfile:
             json.dump(messages, outfile, indent=4)
 
         print("Conversation successfully stored")
