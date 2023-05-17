@@ -11,7 +11,7 @@ def main():
 	## Vectorstore using Weaviate ##
 	# if this is your first time running, set both first_time and clear_store to True - this will get the vectorstore set up right
 	# once vectorstore is set up, change these both to False to keep memory between sessions. 
-	#session = KGConversation(companion=companion)
+	session = VectorstoreConversation(companion=companion, first_time=False, clear_store=False)
 	######
 
 	## Summarized Conversation
@@ -19,7 +19,7 @@ def main():
 	######
 
 	## Knowledge Graph Conversation
-	session = VectorstoreConversation(companion=companion)
+	#session = KGConversation(companion=companion)
 	######
 
 
