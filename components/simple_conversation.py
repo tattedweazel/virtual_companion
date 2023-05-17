@@ -3,7 +3,7 @@ from connectors.chat_gpt_connector import ChatGptConnector
 from base.conversation import Conversation
 from datetime import datetime
 from base.message import Message
-from components.token_counter import TokenCounter
+from tools.token_counter import TokenCounter
 
 
 class SimpleConversation():
