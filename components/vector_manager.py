@@ -19,24 +19,20 @@ class VectorManager():
         self._DYNAMIC=False
 
 
-    def _jdump(self, _in) -> str:
-        return json.dumps(_in, indent=4)
-
-
     def get_schema(self) -> str:
-        return self._jdump(self._client.schema.get())
+        return json.loads(json.dumps(self._client.schema.get()))
     
 
     def clear_schema(self) -> None:
         self._client.schema.delete_all()
 
 
-    def create_class_obj(self, class_name) -> None:
+    def create_class_obj(self, class_name) -> dict:
         self._client.schema.create_class({
             "class": class_name,
             "vectorizer": "text2vec-openai"
         })
-        return self._jdump(self._client.schema.get())
+        return json.loads(json.dumps(self._client.schema.get()))
     
 
     def perform_similarity_search(self, input_string, class_name="", fields=[], limit=5) -> str:
@@ -53,7 +49,7 @@ class VectorManager():
         return docs
 
 
-    def store(self, class_name, data_objs=[]) -> str:
+    def store(self, class_name, data_objs=[]) -> dict:
         with self._client.batch as batch:
             batch.batch_size=self._BATCH_SIZE
             batch.dynamic=self._DYNAMIC
@@ -62,4 +58,4 @@ class VectorManager():
                     data_obj,
                     class_name
                 )
-        return self._jdump(self._client.query.aggregate(class_name).with_meta_count().do())
+        return json.loads(json.dumps(self._client.query.aggregate(class_name).with_meta_count().do()))
