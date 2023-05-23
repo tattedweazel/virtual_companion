@@ -33,8 +33,7 @@ class ComponentConversation():
         user_input = self.interface.get_user_input()
         while not self._exit_check(user_input):
             formatted_input = user_label + user_input
-            input_vectors = self.vector_manager.convert_to_vector(user_input)
-            relevant_docs = self.vector_manager.perform_similarity_search(input_vectors)
+            relevant_docs = self.vector_manager.perform_similarity_search(user_input)
             background = self._summarize_docs(relevant_docs)
             context = self.summarizer.get_summary(self.conversation_history.summary_export())
             recent_exchanges = self.conversation_history.k_latest(self.history_k)
