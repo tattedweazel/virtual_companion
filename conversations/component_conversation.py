@@ -10,7 +10,7 @@ from tools.token_counter import TokenCounter
 
 class ComponentConversation():
 
-    def __init__(self) -> None:
+    def __init__(self, verbose=False) -> None:
         self._interface = CliInterface()
         self._conversation_history = ConversationHistory()
         self._summarizer = Summarizer()
@@ -19,6 +19,7 @@ class ComponentConversation():
         self._history_k = 2
         self._model = 'gpt-3.5-turbo'
         self._companion_name = self._interface.get_companion_name()
+        self.verbose = verbose
 
 
     def _exit_check(self, user_input) -> bool:
@@ -61,12 +62,15 @@ class ComponentConversation():
                                 user_input=user_input,
                                 ai_name=self._companion_name
             )
-            print("********************************************************")
-            print(prompt_template.output())
-            print("********************************************************")
-            print("Token Count:")
-            print(self._token_counter.get_token_count(prompt_template.output()))
-            print("********************************************************")
+
+            if self.verbose:
+                print("********************************************************")
+                print(prompt_template.output())
+                print("********************************************************")
+                print("Token Count:")
+                print(self._token_counter.get_token_count(prompt_template.output()))
+                print("********************************************************")
+
             llm = LLM(model=self._model)
             response = llm.query(prompt_template.output())
             exchange = Exchange(user_input = user_input, response=response)
