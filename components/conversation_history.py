@@ -1,4 +1,5 @@
-from base.exchange import Exchange
+import json
+from datetime import datetime
 
 
 class ConversationHistory():
@@ -8,16 +9,30 @@ class ConversationHistory():
 
 
     def summary_export(self) -> str:
-        return str(self.exchanges)
+        export = ""
+        for exchange in self.exchanges:
+            export += exchange.as_string() + "\n"
+        return export
     
 
-    def k_latest(self, k) -> str:
-        return str(self.exchanges)
+    def k_latest(self, k=4, as_list=False) -> str:
+        results = []
+        for exchange in self.exchanges:
+            results.append(exchange.as_string())
+        if as_list:
+            return results
+        return "\n".join(results[-(k):])
     
 
-    def add_exchange(self, user_input=None, response=None) -> None:
-        self.exchanges.append(Exchange(user_input=user_input, response=response))
+    def add_exchange(self, exchange=None) -> None:
+        self.exchanges.append(exchange)
 
     
     def save(self) -> None:
-        print("stored.")
+        exchanges = []
+        for exchange in self.exchanges:
+            exchanges.append(exchange.as_dict())
+        with open(f"logs/{datetime.strftime(datetime.now(),'%Y%m%d_%H_%M_%S')}.json", "w") as outfile:
+            json.dump(exchanges, outfile, indent=4)
+        print("Conversation successfully stored")
+       

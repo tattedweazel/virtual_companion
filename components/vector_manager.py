@@ -7,10 +7,9 @@ class VectorManager():
 
     def __init__(self) -> None:
         self._creds = SecretSquirrel().stash
-        auth_config = weaviate.AuthApiKey(api_key=self._creds['weaviate_api_key'])
         self._client = weaviate.Client(
             url=self._creds['weaviate_url'],
-            auth_client_secret=auth_config,
+            auth_client_secret=weaviate.AuthApiKey(api_key=self._creds['weaviate_api_key']),
             additional_headers={
                 'X-OpenAI-API-Key': self._creds['open_ai_api_key']
             }
@@ -36,7 +35,7 @@ class VectorManager():
     
 
     def perform_similarity_search(self, input_string, class_name="", fields=[], limit=5) -> str:
-        results = self._jdump(self._client.query.get(
+        results = json.dumps(self._client.query.get(
                 class_name, fields
             ).with_near_text(
                 {"concepts": [input_string]}
@@ -44,8 +43,9 @@ class VectorManager():
         )
         docs = []
         j_data = json.loads(results)
-        for record in j_data['data']['Get'][f"{class_name}"]:
-            docs.append(record['content'])
+        if 'data' in j_data:
+            for record in j_data['data']['Get'][f"{class_name}"]:
+                docs.append(record['content'])
         return docs
 
 
