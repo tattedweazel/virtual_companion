@@ -3,7 +3,7 @@ from conversations.component_conversation import ComponentConversation
 
 def main():
 	## Component Conversation
-	session = ComponentConversation()
+	session = ComponentConversation(verbose=True)
 	######
 
 
