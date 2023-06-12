@@ -26,11 +26,11 @@ class CommentAnalyzer():
         return comments
     
 
-    def _get_projected_token_count(self, part, total):
+    def _get_projected_token_count(self, part, total) -> int:
         return self._token_counter.get_token_count(part) + self._token_counter.get_token_count(total)
     
 
-    def _create_batches(self):
+    def _create_batches(self) -> None:
         batches = []
         batch = ""
         for entry in self._raw_comments:
