@@ -6,7 +6,7 @@ class CommentSummarizer():
 
     def __init__(self) -> None:
         self._model='gpt-3.5-turbo'
-
+        
 
     def get_summary(self, raw_text) -> str:
         prompt_template = CSP(raw_text=raw_text)

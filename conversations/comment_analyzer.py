@@ -16,7 +16,7 @@ class CommentAnalyzer():
         self._token_counter = TokenCounter()
         self._summarizer = CommentSummarizer()
         self._summary_condeser = SummaryCondenser()
-        self.BATCH_TOKEN_LIMIT = 1000
+        self.BATCH_TOKEN_LIMIT = 2000
 
 
     def _load_comments(self, load_from) -> list:
